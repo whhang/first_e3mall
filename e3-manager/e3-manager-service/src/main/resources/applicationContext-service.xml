@@ -2,6 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context" 
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
 	xmlns:aop="http://www.springframework.org/schema/aop" 
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -16,7 +17,9 @@
 	http://www.springframework.org/schema/mvc
 	http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
 	http://www.springframework.org/schema/util
-	http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+	http://www.springframework.org/schema/util/spring-util-4.0.xsd
+	http://code.alibabatech.com/schema/dubbo
+	http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 	
 	<!-- 扫描spring 的 service -->
 	<context:component-scan base-package="com.e3mall.service"></context:component-scan>
@@ -45,5 +48,25 @@
 	<aop:config>
 		<aop:advisor advice-ref="txAdvice" pointcut="execution(* com.e3mall.service.*.*(..))"/>
 	</aop:config>
-
+	
+	<!-- 发布服务  将service接口发布到zookeeper注册中心 -->
+	<!-- 提供方应用信息,用于计算机依赖关系 -->
+	<dubbo:application name="e3-manager-service"/>
+	<!-- 注册到Zookeeper  -->
+	<!-- <dubbo:registry protocol="zookeeper"
+		address="192.168.102.131:2181" /> -->
+		
+	<!--直连方式  -->
+	<dubbo:registry protocol="zookeeper"
+		address="N/A" />
+		
+		
+	<!-- 用dubbo协议在20880端口暴露服务 -->
+	<dubbo:protocol name="dubbo" port="20880" />
+	
+	
+	<!-- 声明需要暴露的服务接口 -->
+	<dubbo:service interface="com.e3mall.service.ItemService" ref="itemServiceImpl" timeout="100000"/>
+	
+	<bean name="itemServiceImpl" class="com.e3.service.impl.ItemServiceImpl"></bean>
 </beans>

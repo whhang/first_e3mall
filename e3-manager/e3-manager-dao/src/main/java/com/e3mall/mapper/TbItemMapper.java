@@ -2,7 +2,9 @@ package com.e3mall.mapper;
 
 import com.e3mall.pojo.TbItem;
 import com.e3mall.pojo.TbItemExample;
+
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface TbItemMapper {

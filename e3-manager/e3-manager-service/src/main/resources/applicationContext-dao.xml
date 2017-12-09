@@ -29,7 +29,7 @@
 	<!-- 连接数据工厂:根据 SqlSessionFactoryBean生成sqlSession-->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
-		<property name="configLocation" value="classpath:mybatis/sqlMapConfig.xml"></property>
+		<property name="configLocation" value="classpath:sqlMapConfig.xml"></property>
 	</bean>
 	<!-- 
 	扫描接口：接口代理开发 
